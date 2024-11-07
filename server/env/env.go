@@ -68,6 +68,8 @@ func InitAllEnv() error {
 	osGoogleClientSecret := os.Getenv(constants.EnvKeyGoogleClientSecret)
 	osGithubClientID := os.Getenv(constants.EnvKeyGithubClientID)
 	osGithubClientSecret := os.Getenv(constants.EnvKeyGithubClientSecret)
+	osDiscordClientID := os.Getenv(constants.EnvKeyDiscordClientID)
+	osDiscordClientSecret := os.Getenv(constants.EnvKeyDiscordClientSecret)
 	osFacebookClientID := os.Getenv(constants.EnvKeyFacebookClientID)
 	osFacebookClientSecret := os.Getenv(constants.EnvKeyFacebookClientSecret)
 	osLinkedInClientID := os.Getenv(constants.EnvKeyLinkedInClientID)
@@ -426,6 +428,20 @@ func InitAllEnv() error {
 	}
 	if osGithubClientSecret != "" && envData[constants.EnvKeyGithubClientSecret] != osGithubClientSecret {
 		envData[constants.EnvKeyGithubClientSecret] = osGithubClientSecret
+	}
+
+	if val, ok := envData[constants.EnvKeyDiscordClientID]; !ok || val == "" {
+		envData[constants.EnvKeyDiscordClientID] = osDiscordClientID
+	}
+	if osDiscordClientID != "" && envData[constants.EnvKeyDiscordClientID] != osDiscordClientID {
+		envData[constants.EnvKeyDiscordClientID] = osDiscordClientID
+	}
+
+	if val, ok := envData[constants.EnvKeyDiscordClientSecret]; !ok || val == "" {
+		envData[constants.EnvKeyDiscordClientSecret] = osDiscordClientSecret
+	}
+	if osDiscordClientSecret != "" && envData[constants.EnvKeyDiscordClientSecret] != osDiscordClientSecret {
+		envData[constants.EnvKeyDiscordClientSecret] = osDiscordClientSecret
 	}
 
 	if val, ok := envData[constants.EnvKeyFacebookClientID]; !ok || val == "" {

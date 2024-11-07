@@ -14,6 +14,7 @@ func metaTests(t *testing.T, s TestSetup) {
 		ctx := context.Background()
 		meta, err := resolvers.MetaResolver(ctx)
 		assert.Nil(t, err)
+		assert.false(t, meta.IsDiscordLoginEnabled)
 		assert.False(t, meta.IsFacebookLoginEnabled)
 		assert.False(t, meta.IsGoogleLoginEnabled)
 		assert.False(t, meta.IsGithubLoginEnabled)

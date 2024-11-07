@@ -29,6 +29,7 @@ func clearSessionIfRequired(currentData, updatedData map[string]interface{}) {
 	isCurrentMobileBasicAuthEnabled := !currentData[constants.EnvKeyDisableMobileBasicAuthentication].(bool)
 	isCurrentMagicLinkLoginEnabled := !currentData[constants.EnvKeyDisableMagicLinkLogin].(bool)
 	isCurrentAppleLoginEnabled := currentData[constants.EnvKeyAppleClientID] != nil && currentData[constants.EnvKeyAppleClientSecret] != nil && currentData[constants.EnvKeyAppleClientID].(string) != "" && currentData[constants.EnvKeyAppleClientSecret].(string) != ""
+	isCurrentDiscordLoginEnabled := currentData[constants.EnvKeyDiscordClientID] != nil && currentData[constants.EnvKeyDiscordClientSecret] != nil && currentData[constants.EnvKeyDiscordClientID].(string) != "" && currentData[constants.EnvKeyDiscordClientSecret].(string) != ""
 	isCurrentFacebookLoginEnabled := currentData[constants.EnvKeyFacebookClientID] != nil && currentData[constants.EnvKeyFacebookClientSecret] != nil && currentData[constants.EnvKeyFacebookClientID].(string) != "" && currentData[constants.EnvKeyFacebookClientSecret].(string) != ""
 	isCurrentGoogleLoginEnabled := currentData[constants.EnvKeyGoogleClientID] != nil && currentData[constants.EnvKeyGoogleClientSecret] != nil && currentData[constants.EnvKeyGoogleClientID].(string) != "" && currentData[constants.EnvKeyGoogleClientSecret].(string) != ""
 	isCurrentGithubLoginEnabled := currentData[constants.EnvKeyGithubClientID] != nil && currentData[constants.EnvKeyGithubClientSecret] != nil && currentData[constants.EnvKeyGithubClientID].(string) != "" && currentData[constants.EnvKeyGithubClientSecret].(string) != ""
@@ -41,6 +42,7 @@ func clearSessionIfRequired(currentData, updatedData map[string]interface{}) {
 	isUpdatedMobileBasicAuthEnabled := !updatedData[constants.EnvKeyDisableMobileBasicAuthentication].(bool)
 	isUpdatedMagicLinkLoginEnabled := !updatedData[constants.EnvKeyDisableMagicLinkLogin].(bool)
 	isUpdatedAppleLoginEnabled := updatedData[constants.EnvKeyAppleClientID] != nil && updatedData[constants.EnvKeyAppleClientSecret] != nil && updatedData[constants.EnvKeyAppleClientID].(string) != "" && updatedData[constants.EnvKeyAppleClientSecret].(string) != ""
+	isUpdatedDiscordLoginEnabled := updatedData[constants.EnvKeyDiscordClientID] != nil && updatedData[constants.EnvKeyDiscordClientSecret] != nil && updatedData[constants.EnvKeyDiscordClientID].(string) != "" && updatedData[constants.EnvKeyDiscordClientSecret].(string) != ""
 	isUpdatedFacebookLoginEnabled := updatedData[constants.EnvKeyFacebookClientID] != nil && updatedData[constants.EnvKeyFacebookClientSecret] != nil && updatedData[constants.EnvKeyFacebookClientID].(string) != "" && updatedData[constants.EnvKeyFacebookClientSecret].(string) != ""
 	isUpdatedGoogleLoginEnabled := updatedData[constants.EnvKeyGoogleClientID] != nil && updatedData[constants.EnvKeyGoogleClientSecret] != nil && updatedData[constants.EnvKeyGoogleClientID].(string) != "" && updatedData[constants.EnvKeyGoogleClientSecret].(string) != ""
 	isUpdatedGithubLoginEnabled := updatedData[constants.EnvKeyGithubClientID] != nil && updatedData[constants.EnvKeyGithubClientSecret] != nil && updatedData[constants.EnvKeyGithubClientID].(string) != "" && updatedData[constants.EnvKeyGithubClientSecret].(string) != ""
@@ -63,6 +65,10 @@ func clearSessionIfRequired(currentData, updatedData map[string]interface{}) {
 
 	if isCurrentAppleLoginEnabled && !isUpdatedAppleLoginEnabled {
 		memorystore.Provider.DeleteSessionForNamespace(constants.AuthRecipeMethodApple)
+	}
+
+	if isCurrentDiscordLoginEnabled && !isUpdatedDiscordLoginEnabled {
+		memorystore.Provider.DeleteSessionForNamespace(constants.AuthRecipeMethodDiscord)
 	}
 
 	if isCurrentFacebookLoginEnabled && !isUpdatedFacebookLoginEnabled {

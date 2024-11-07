@@ -41,6 +41,18 @@ func MetaResolver(ctx context.Context) (*model.Meta, error) {
 		facebookClientSecret = ""
 	}
 
+	discordClientID, err := memorystore.Provider.GetStringStoreEnvVariable(constants.EnvKeyDiscordClientID)
+	if err != nil {
+		log.Debug("Failed to get Discord Client ID from environment variable", err)
+		discordClientID = ""
+	}
+
+	discordClientSecret, err := memorystore.Provider.GetStringStoreEnvVariable(constants.EnvKeyDiscordClientSecret)
+	if err != nil {
+		log.Debug("Failed to get Discord Client Secret from environment variable", err)
+		discordClientSecret = ""
+	}
+
 	linkedClientID, err := memorystore.Provider.GetStringStoreEnvVariable(constants.EnvKeyLinkedInClientID)
 	if err != nil {
 		log.Debug("Failed to get LinkedIn Client ID from environment variable", err)
@@ -174,6 +186,7 @@ func MetaResolver(ctx context.Context) (*model.Meta, error) {
 	metaInfo := model.Meta{
 		Version:                            constants.VERSION,
 		ClientID:                           clientID,
+		IsDiscordLoginEnabled:				discordClientID != "" && discordClientSecret != "",
 		IsGoogleLoginEnabled:               googleClientID != "" && googleClientSecret != "",
 		IsGithubLoginEnabled:               githubClientID != "" && githubClientSecret != "",
 		IsFacebookLoginEnabled:             facebookClientID != "" && facebookClientSecret != "",
